@@ -29,11 +29,9 @@ defmodule Solve do
       for y <- 0..15 do
         for x <- 0..15 do
           terms =
-            for i <- y..(y + 3),
+            for {i, j} <- Enum.zip(y..(y + 3), x..(x + 3)),
                 line = Enum.at(grid, i) do
-              for j <- x..(x + 3) do
-                Enum.at(line, j)
-              end
+              Enum.at(line, j)
             end
             |> List.flatten()
 
@@ -42,7 +40,7 @@ defmodule Solve do
       end
       |> List.flatten()
 
-    Enum.max([Enum.max(products), find_max_for_diagonals(mirror(grid))])
+    Enum.max(products)
   end
 
   def mirror(grid) do
@@ -74,6 +72,8 @@ defmodule Solve do
 
     maxes = [find_max_for_lines(grid)]
     maxes = [find_max_for_columns(grid) | maxes]
+    maxes = [find_max_for_diagonals(grid) | maxes]
+    maxes = [find_max_for_diagonals(mirror(grid)) | maxes]
     IO.inspect(Enum.max(maxes))
   end
 end
