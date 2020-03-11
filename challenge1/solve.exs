@@ -49,6 +49,7 @@ defmodule Solve do
     end
   end
 
+  # Taken from https://elixirforum.com/t/transpose-a-list-of-lists-using-list-comprehension/17638/2
   def transpose([[] | _]), do: []
 
   def transpose(m) do
